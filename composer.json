@@ -1,0 +1,42 @@
+{
+	"name": "simpl/simple-todo-app",
+	"description": "Simple todo app for WordPress plugin",
+	"type": "wordpress-plugin",
+	"require-dev": {
+		"wp-coding-standards/wpcs": "^2",
+		"dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
+		"phpcompatibility/php-compatibility": "^9"
+	},
+	"license": "MIT",
+	"authors": [{
+		"name": "Bart Jaskulski",
+		"email": "bjaskulski@protonmail.com"
+	}],
+	"minimum-stability": "stable",
+	"require": {},
+	"config": {
+		"platform": {
+			"php": "7.1"
+		}
+	},
+	"autoload": {
+		"psr-4": {
+			"Simpl\\ToDoApp\\": "lib"
+		}
+	},
+	"scripts": {
+		"install-codestandards": [
+			"Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
+		],
+		"phpcbf-dev": "\"vendor/bin/phpcbf\"",
+		"run-phpcbf": [
+			"@phpcbf-dev"
+		],
+		"phpcs-dev": "\"vendor/bin/phpcs\"",
+		"run-phpcs": [
+			"@phpcs-dev"
+		],
+		"phpunit-dev": "\"vendor/bin/phpunit\"",
+		"phpunit-integration-dev": "\"vendor/bin/phpunit\" -c \"phpunit.integration.xml.dist\""
+	}
+}
