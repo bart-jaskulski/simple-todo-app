@@ -1,1 +1,99 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+
+.simpl-todo {
+  list-style: none;
+	max-width: 40ch;
+  padding: 0;
+  margin: 16px auto;
+	background: #FFF;
+	box-shadow: 0 2px 1px rgba(0, 0, 0, 0.25);
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	color: #9599A0;
+	font-family: 'Open Sans', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+
+  & .todo__item {
+	display: flex;
+	align-items: center;
+		padding: 8px min( 2vw, 16px );
+		overflow-x: auto;
+
+		&:first-of-type {
+			background-color: #F3F3F3;
+		}
+
+		&:not(:last-of-type) {
+			border-bottom: 1px solid #EAEEF0;
+		}
+
+		&:is(:hover, :focus-within) {
+			background-color: #F3F3F3;
+		}
+  }
+
+  & .todo__faux-checkbox {
+		--size: min( 15vw, 40px );
+		display: block;
+		flex: 0 0 auto;
+		width: var(--size);
+		height: var(--size);
+		margin: 4px;
+		padding: 4px;
+		border: 1px solid #6BB3CA;
+		border-radius: 4px;
+		background-color: #FFF;
+		box-shadow: 0 1px 1px rgba(0, 0, 0, .25 );
+		cursor: pointer;
+  }
+
+	& input[type="checkbox"]:checked ~ .todo__faux-checkbox {
+		box-shadow: inset 0 2px 1px rgba( 0, 0, 0, .25);
+		background-color: #F9F8F8;
+		border-color: #F9F8F8;
+		color: #CCCECF;
+
+		&::before {
+			content: "✔️";
+			display: flex;
+			height: 100%;
+			align-items: center;
+			justify-content: center;
+		}
+	}
+
+
+  & input[type="checkbox"] {
+		display: block;
+  }
+
+  & .todo__content {
+		all: unset;
+		display: flex;
+		flex: 1 0 auto;
+		padding: 8px;
+  }
+
+	& .todo__remove {
+		display: block;
+		padding: 8px;
+		min-width: 44px;
+		margin: 0;
+		margin-left: auto;
+		opacity: 0;
+		transition: opacity 250ms ease-in-out;
+		will-change: opacity;
+	}
+
+	& .todo__item:is(:focus-within, :hover) .todo__remove {
+		opacity: 1;
+	}
+
+	& .screen-reader-text {
+		clip: rect(0 0 0 0);
+	  clip-path: inset(50%);
+	  height: 1px;
+	  overflow: hidden;
+	  position: absolute;
+	  white-space: nowrap;
+	  width: 1px;
+	}
+}

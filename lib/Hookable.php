@@ -1,6 +1,6 @@
 <?php
 
-namespace Simple\ToDoApp;
+namespace Simpl\ToDoApp;
 
 interface Hookable {
 	public function hook();

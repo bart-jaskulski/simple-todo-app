@@ -1,37 +1,29 @@
 import Item from './Item'
+import Form from './Form'
 
 export default class ToDo {
 
-	async modifyToDo( actionType ) {
-		let modifyRequest = await fetch(
-			todoApp.ajaxUrl,
-			{
-				method: 'POST',
-				credentials: 'same-origin',
-				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded'
-				},
-				body: new URLSearchParam(
-					{
-						action: 'process_todo',
-						nonce: todoApp.nonce,
-						actionType: actionType,
-					}
-				)
+	constructor( el ) {
+		this.el = el;
+
+		this.form = new Form( el.getElementsByTagName('form')[0] )
+
+		this.itemsList = el.querySelectorAll( 'li' );
+
+		this.initialize();
+	}
+
+	initialize() {
+		this.itemsList.forEach( (item, i) => {
+			if ( i === 0 ) {
+				return;
 			}
-		)
 
-		let itemsList = await modifyRequest.json()
-
-		return itemsList
+			new Item( item )
+		})
 	}
 
-	applyUpdate() {
+	applyUpdate() {}
 
-	}
-
-	getInitialState() {}
-
-	getItems() {
-	}
+	getItems() {}
 }
