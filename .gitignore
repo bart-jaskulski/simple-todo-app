@@ -1,5 +1,5 @@
 /node_modules/
 /vendor/
-/assets/
+assets/
 composer.lock
 package-lock.json

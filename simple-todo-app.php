@@ -14,3 +14,5 @@
 require __DIR__ . '/vendor/autoload.php';
 
 new \Simpl\ToDoApp\Plugin();
+
+register_activation_hook( __FILE__, array( 'Simpl\ToDoApp\Plugin', 'create_page_with_shortcode' ) );

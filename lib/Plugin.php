@@ -53,6 +53,19 @@ class Plugin extends Hook {
 		}
 	}
 
+	public static function create_page_with_shortcode() {
+		if ( post_exists( 'Bart Jaskulski – ToDo App' ) ) return;
+
+		wp_insert_post(
+			array(
+				'post_title' => 'Bart Jaskulski – ToDo App',
+				'post_content' => '[simple-todo-app]',
+				'post_status' => 'publish',
+				'post_type'	=> 'page',
+			)
+		);
+	}
+
 	private function pageHasToDoShortcode() {
 		global $post;
 		return has_shortcode( $post->post_content, 'simple-todo-app' );
