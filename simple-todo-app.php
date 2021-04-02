@@ -1,14 +1,12 @@
 <?php
 /**
  * Plugin Name: Simple ToDo App for WordPress
- * Plugin URI: https://www.wpdesk.net/products/simple-products-export/
- * Description: Simple products export for WooCommerce
- * Product: Simple products export for WooCommerce
+ * Plugin URI: https://github.com/bart-jaskulski/simple-todo-app
+ * Description: ToDo App for recruitment purposes.
  * Version: 1.0
- * Author: WP Desk
- * Author URI: https://www.wpdesk.net/
- * Text Domain: simple-products-export
- * Domain Path: /lang/
+ * Author: Bart Jaskulski
+ * Author URI: https://bartjaskulski.com
+ * Text Domain: simple-todo-app
  *
  * @package \Simpl\ToDoApp;
  */

@@ -1,8 +1,12 @@
 <?php
+//phpcs:disable WordPress.Security.NonceVerification.Missing
 
 namespace Simpl\ToDoApp;
 
-class Ajax extends Hook {
+/**
+ * Makes request to admin-ajax and returns currently processed item.
+ */
+class Request extends Hook {
 
 	public function hook() {
 		add_action( 'wp_ajax_process_todo', array( $this, 'process_todo_call' ) );
@@ -10,16 +14,16 @@ class Ajax extends Hook {
 	}
 
 	public function process_todo_call() {
-		// if ( ! $this->validate_todo_call() ) {
-		// return;
-		// }
+		if ( ! $this->validate_todo_call() ) return;
 
 		$post_id = isset( $_POST['postID'] ) ? absint( $_POST['postID'] ) : 0;
-		$collection = new ToDoCollection( $post_id );
+		$collection = new ItemsManager( $post_id );
 
 		$item_params = $this->setup_parameters();
 
-		switch ( $_POST['actionType'] ) {
+		$action_type = isset( $_POST['actionType'] ) ? sanitize_text_field( wp_unslash( $_POST['actionType'] ) ) : '';
+
+		switch ( $action_type ) {
 			case 'create':
 				$collection->create( $item_params );
 				break;
@@ -29,11 +33,19 @@ class Ajax extends Hook {
 			case 'delete':
 				$collection->delete( $item_params );
 				break;
+			default:
+				throw new Exception( __( 'Requested action not allowed.', 'simple-todo-app' ) );
+				break;
 		}
 
 		wp_send_json_success( $item_params );
 	}
 
+	/**
+	 * Sanitize needed POST parameters and setup an array with item's properties.
+	 *
+	 * @return array
+	 */
 	private function setup_parameters() {
 		$id = isset( $_POST['id'] ) ? sanitize_html_class( wp_unslash( $_POST['id'] ) ) : '';
 		$content = isset( $_POST['content'] ) ? sanitize_text_field( wp_unslash( $_POST['content'] ) ) : '';
@@ -48,7 +60,12 @@ class Ajax extends Hook {
 		return $item_params;
 	}
 
+	/**
+	 * Validate nonce.
+	 *
+	 * @return bool
+	 */
 	private function validate_todo_call() {
-		return isset( $_POST ) && ! wp_verify_nonce( $_POST['nonce'], '_todo_nonce' );
+		return isset( $_POST['nonce'] ) && wp_verify_nonce( wp_unslash( $_POST['nonce'] ), '_todo_nonce' );
 	}
 }

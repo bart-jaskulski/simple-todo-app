@@ -1,16 +1,34 @@
 <?php
+/**
+ * Main plugin class
+ *
+ * @package Simpl\ToDoApp
+ */
 
 namespace Simpl\ToDoApp;
 
+/**
+ * Main plugin class responsible for initializing all components.
+ */
 class Plugin extends Hook {
 
-	private $ajax;
+	/**
+	 * Request class instance.
+	 *
+	 * @var Request
+	 */
+	private $request;
 
+	/**
+	 * Shortcode class instance.
+	 *
+	 * @var Shortcode
+	 */
 	private $shortcode;
 
 	public function __construct() {
 		parent::__construct();
-		$this->ajax = new Ajax();
+		$this->request = new Request();
 		$this->shortcode = new Shortcode();
 	}
 
@@ -20,7 +38,7 @@ class Plugin extends Hook {
 
 	public function wp_enqueue_scripts() {
 		if ( $this->pageHasToDoShortcode() ) {
-			wp_enqueue_script( 'simple-todo-app', plugins_url( '../assets/main.js', __FILE__ ), array(), '', true );
+			wp_enqueue_script( 'simple-todo-app', plugins_url( '../assets/main.js', __FILE__ ), array(), '1.0', true );
 			wp_localize_script(
 				'simple-todo-app',
 				'todoApp',

@@ -9,19 +9,23 @@ namespace Simpl\ToDoApp;
 class Shortcode {
 
 	public function __construct() {
-		$this->createShortcode();
+		$this->create_shortcode();
 	}
 
-	public function createShortcode() {
-		add_shortcode( 'simple-todo-app', array( $this, 'showShortcodeContent' ) );
+	public function create_shortcode() {
+		add_shortcode( 'simple-todo-app', array( $this, 'display_shortcode_content' ) );
 	}
 
-	public function showShortcodeContent() {
+	public function display_shortcode_content() {
 		ob_start();
-		$collection = new ToDoCollection( get_the_ID() );
+		$this->include_shortcode_template();
+		return ob_get_clean();
+	}
+
+	private function include_shortcode_template() {
+		$collection = new ItemsManager( get_the_ID() );
 		$todo_items = $collection->get_items();
+
 		require plugin_dir_path( __DIR__ ) . '/templates/todo-card.php';
-		$content = ob_get_clean();
-		return $content;
 	}
 }

@@ -1,0 +1,114 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+
+.simpl-todo {
+	--todo-font-family: 'Open Sans', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+	--todo-color-white: #FFFFFF;
+	--todo-color-black: #9599A0;
+	--todo-color-gray-dark: #F3F3F3;
+	--todo-color-gray-light: #F9F8F8;
+	--todo-color-blue: #6BB3CA;
+	--todo-shadow: 0 2px 1px rgba(0, 0, 0, 0.25);
+
+  list-style: none;
+	max-width: 40ch;
+  padding: 0;
+  margin: 16px auto;
+	background: var(--todo-color-white);
+	box-shadow: var(--todo-shadow);
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	color: var(--todo-color-black);
+	font-family: var(--todo-font-family);
+
+  & .todo__item {
+		display: flex;
+		align-items: center;
+		padding: 8px min( 2vw, 16px );
+		overflow-x: auto;
+
+		&:first-of-type,
+		&:is(:hover, :focus-within) {
+			background-color: var(--todo-color-gray-dark);
+		}
+
+		&:not(:last-of-type) {
+			border-bottom: 1px solid var(--todo-color-gray-dark);
+		}
+  }
+
+  & .todo__faux-checkbox {
+		--size: min( 15vw, 36px );
+		display: block;
+		flex: 0 0 auto;
+		width: var(--size);
+		height: var(--size);
+		margin: 4px;
+		padding: 4px;
+		border: 1px solid var(--todo-color-blue);
+		border-radius: 4px;
+		background-color: var(--todo-color-white);
+		box-shadow: var(--todo-shadow);
+		cursor: pointer;
+  }
+
+	& input[type="checkbox"] {
+		display: block;
+
+		&:checked ~ .todo__faux-checkbox {
+			box-shadow: inset var(--todo-shadow);
+			background-color: var(--todo-color-gray-light);
+			border-color: var(--todo-color-gray-light);
+			color: #CCCECF;
+
+			&::before {
+				content: "✔️";
+				display: flex;
+				height: 100%;
+				align-items: center;
+				justify-content: center;
+			}
+		}
+
+		&:focus ~ .todo__faux-checkbox {
+			box-shadow: 0 0px 4px 1px var(--todo-color-blue)
+		}
+	}
+
+  & .todo__content {
+		all: unset;
+		display: flex;
+		flex: 1 0 auto;
+		padding: 8px;
+  }
+
+	& .todo__remove {
+		display: block;
+		padding: 8px;
+		margin: 0;
+		margin-left: auto;
+		opacity: 0;
+		transition: opacity 250ms ease-in-out;
+		will-change: opacity;
+	}
+
+	& .todo__item:is(:focus-within, :hover) .todo__remove {
+		opacity: 1;
+	}
+
+	& :is(.todo__remove, .todo__faux-checkbox, .todo__content):focus {
+		outline-style: auto;
+		outline-color: var(--todo-color-black);
+		outline-offset: -1px;
+		outline-width: 1px;
+		box-shadow: unset;
+	}
+
+	& .screen-reader-text {
+		clip: rect(0 0 0 0);
+	  clip-path: inset(50%);
+	  height: 1px;
+	  overflow: hidden;
+	  position: absolute;
+	  white-space: nowrap;
+	  width: 1px;
+	}
+}

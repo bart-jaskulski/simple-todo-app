@@ -5,12 +5,27 @@ namespace Simpl\ToDoApp;
 /**
  * CRUD class for storing todo list as post meta data.
  */
-class ToDoCollection {
+class ItemsManager {
 
+	/**
+	 * Store items with specified meta field key.
+	 *
+	 * @var string
+	 */
 	const META_FIELD = 'todo_tasks_list';
 
+	/**
+	 * Post to associate tasks list with.
+	 *
+	 * @var int
+	 */
 	private $post_id;
 
+	/**
+	 * Store items in object.
+	 *
+	 * @var array
+	 */
 	private $items;
 
 	public function __construct( $post_id ) {
@@ -37,17 +52,23 @@ class ToDoCollection {
 	public function update( $item_to_update ) {
 		$items = $this->get_items();
 		$item_id = array_search( $item_to_update['id'], array_column( $items, 'id' ) );
-		if ( ! is_null( $item_to_update['content'] ) ) {
-			wp_send_json_error( $item_to_update );
+
+		if ( '' !== $item_to_update['content'] ) {
 			$items[ $item_id ]['content'] = $item_to_update['content'];
 		}
-		if ( ! is_null( $item_to_update['is_checked'] ) ) {
+
+		if ( '' !== $item_to_update['is_checked'] ) {
 			$items[ $item_id ]['is_checked'] = $item_to_update['is_checked'];
 		}
 
 		$this->update_meta( $items );
 	}
 
+	/**
+	 * Return filtered array where ID is search key.
+	 *
+	 * @param  array $item_to_remove
+	 */
 	public function delete( $item_to_remove ) {
 		$updated_items = array_filter(
 			$this->get_items(),

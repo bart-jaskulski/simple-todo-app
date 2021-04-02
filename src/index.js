@@ -1,6 +1,4 @@
-import ToDo from './Todo'
-import './style.css'
+import ToDo from './js/ToDo';
+import './css/style.css';
 
-const todo = document.getElementById( 'todo' );
-
-new ToDo(todo)
+new ToDo(document.getElementById( 'todo' ));
